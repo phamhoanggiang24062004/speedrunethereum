@@ -13,8 +13,8 @@ contract Vendor is Ownable {
 
     uint256 public constant tokensPerEth = 100;
 
-    constructor(address tokenAddress) {
-        yourToken = IERC20(tokenAddress);
+    constructor(address tokenAddress) Ownable(msg.sender) {
+        yourToken = YourToken(tokenAddress);
     }
 
     // Buy tokens with ETH
