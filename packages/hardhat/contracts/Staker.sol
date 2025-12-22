@@ -17,7 +17,7 @@ contract Staker {
 
     constructor(address exampleExternalContractAddress) {
         exampleExternalContract = ExampleExternalContract(exampleExternalContractAddress);
-        deadline = block.timestamp + 120 seconds;
+        deadline = block.timestamp + 72 hours;
     }
 
     modifier onlyBeforeDeadline() {
