@@ -1,0 +1,39 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/ExampleExternalContract.sol": {
+      "content": "// SPDX-License-Identifier: MIT\r\npragma solidity 0.8.20; //Do not change the solidity version as it negatively impacts submission grading\r\n\r\ncontract ExampleExternalContract {\r\n    bool public completed;\r\n\r\n    function complete() public payable {\r\n        completed = true;\r\n    }\r\n}\r\n"
+    },
+    "contracts/Staker.sol": {
+      "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.4;\r\n\r\nimport \"./ExampleExternalContract.sol\";\r\n\r\ncontract Staker {\r\n\r\n    ExampleExternalContract public exampleExternalContract;\r\n\r\n    mapping(address => uint256) public balances;\r\n\r\n    uint256 public constant threshold = 1 ether;\r\n    uint256 public deadline;\r\n    bool public openForWithdraw;\r\n\r\n    event Stake(address indexed staker, uint256 amount);\r\n\r\n    constructor(address exampleExternalContractAddress) {\r\n        exampleExternalContract = ExampleExternalContract(exampleExternalContractAddress);\r\n        deadline = block.timestamp + 72 hours;\r\n    }\r\n\r\n    modifier onlyBeforeDeadline() {\r\n        require(block.timestamp < deadline, \"Staking period over\");\r\n        _;\r\n    }\r\n\r\n    modifier onlyAfterDeadline() {\r\n        require(block.timestamp >= deadline, \"Too early\");\r\n        _;\r\n    }\r\n\r\n    function stake() public payable onlyBeforeDeadline {\r\n        require(msg.value > 0, \"Must send ETH\");\r\n        balances[msg.sender] += msg.value;\r\n        emit Stake(msg.sender, msg.value);\r\n    }\r\n\r\n    function timeLeft() public view returns(uint256) {\r\n        if (block.timestamp >= deadline) return 0;\r\n        return deadline - block.timestamp;\r\n    }\r\n\r\n    function execute() public onlyAfterDeadline {\r\n        if (openForWithdraw) return;\r\n\r\n        if(address(this).balance >= threshold) {\r\n            uint256 amount = address(this).balance;\r\n            exampleExternalContract.complete{ value: amount }();\r\n        } else {\r\n            openForWithdraw = true;\r\n        }\r\n    }\r\n\r\n    function withdraw() public onlyAfterDeadline {\r\n        require(openForWithdraw, \"Not open for withdraw\");\r\n        uint256 bal = balances[msg.sender];\r\n        require(bal > 0, \"Nothing to withdraw\");\r\n\r\n        balances[msg.sender] = 0;\r\n        payable(msg.sender).transfer(bal);\r\n    }\r\n\r\n    receive() external payable {\r\n        stake();\r\n    }\r\n}\r\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "paris",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
