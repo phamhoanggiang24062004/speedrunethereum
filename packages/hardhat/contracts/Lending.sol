@@ -163,8 +163,8 @@ contract Lending is Ownable {
         if (!success) revert Lending__TransferFailed();
 
         uint256 collateral = s_userCollateral[user];
-        uint256 reward = (collateral * LIQUIDATOR_REWARD) / 100;
-        uint256 payout = collateral + reward;
+
+        uint256 payout = collateral; 
 
         s_userBorrowed[user] = 0;
         s_userCollateral[user] = 0;
@@ -175,7 +175,7 @@ contract Lending is Ownable {
         emit Liquidation(
             user,
             msg.sender,
-            payout,
+            payout, // Số tiền Liquidator nhận được
             debt,
             i_cornDEX.currentPrice()
         );
