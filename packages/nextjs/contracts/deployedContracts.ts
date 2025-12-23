@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   11155111: {
     DiceGame: {
-      address: "0x554FDB7EE4d03E5a13DeAB603095D96865F20caD",
+      address: "0x4956Af5B94795baD49fe072252241363592eB37b",
       abi: [
         {
           inputs: [],
@@ -102,7 +102,7 @@ const deployedContracts = {
         },
       ],
       inheritedFunctions: {},
-      deployedOnBlock: 9897871,
+      deployedOnBlock: 9898062,
     },
   },
 } as const;
