@@ -89,6 +89,8 @@ contract DEX {
 
     // Deposit ETH and tokens to provide liquidity
     function deposit() public payable returns (uint256 tokensDeposited) {
+        require(msg.value > 0, "Must send ETH to deposit");
+
         uint256 ethReserve = address(this).balance - msg.value;
         uint256 tokenReserve = token.balanceOf(address(this));
 
