@@ -1,4 +1,4 @@
-<img width="1919" height="1031" alt="checkpoint1_challenge1" src="https://github.com/user-attachments/assets/17367888-4ed0-44d9-a9d4-fa5edb39666c" />﻿# SpeedRun Ethereum Challenges
+Ethereum Challenges
 
 Repository này chứa mã nguồn giải pháp cho các challenge trong **SpeedRun Ethereum**. Mỗi challenge được phát triển và lưu trữ trên một nhánh (branch) riêng biệt.
 
@@ -70,8 +70,14 @@ yarn vercel
 ```
 
 ⚠️ Lưu ý: Nếu quá trình deploy frontend bị lỗi 404 Not Found thì có thể thử cách sau. Trong phần challenge đang deploy trên Vercel, chọn mục Settings -> Build and Deployment. Sau đó thực hiện cấu hình trong mục Framework Settings và Root Directory như trong ảnh dưới:
+
 <img width="1136" height="764" alt="Screenshot 2025-12-30 000225" src="https://github.com/user-attachments/assets/c7bb87c0-b77f-4ba2-871b-4b78cf1ff4a2" />
 <img width="1153" height="421" alt="Screenshot 2025-12-30 000301" src="https://github.com/user-attachments/assets/cc9e8689-a3d5-4930-bf5b-b0ac58da1824" />
+
+### 📝 Hướng dẫn Submit challenge
+Sau khi hoàn tất deploy, truy cập lại trang Challenge trên SpeedRunEthereum và nhập thông tin:
+- **Deployed URL:** Đường dẫn Frontend đã deploy (ví dụ: `https://token-vendor.vercel.app`).
+- **Contract URL:** Đường dẫn Smart Contract trên Sepolia Etherscan.
 
 
 
