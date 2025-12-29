@@ -1,4 +1,4 @@
-Ethereum Challenges
+# SpeedRun Ethereum Challenges
 
 Repository này chứa mã nguồn giải pháp cho các challenge trong **SpeedRun Ethereum**. Mỗi challenge được phát triển và lưu trữ trên một nhánh (branch) riêng biệt.
 
@@ -78,6 +78,7 @@ yarn vercel
 Sau khi hoàn tất deploy, truy cập lại trang Challenge trên SpeedRunEthereum và nhập thông tin:
 - **Deployed URL:** Đường dẫn Frontend đã deploy (ví dụ: `https://token-vendor.vercel.app`).
 - **Contract URL:** Đường dẫn Smart Contract trên Sepolia Etherscan.
+
 
 
 
